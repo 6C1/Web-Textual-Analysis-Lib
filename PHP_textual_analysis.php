@@ -17,8 +17,8 @@
  *
  * @return float
  */
-function tf_idf($term,$document,$corpus, $tf_type='raw') {
-  return tf($term,$document,$tf_type) * idf($term,$corpus);
+function tf_idf($term, $document, $corpus, $tf_type='raw', $log_idf=true) {
+  return tf($term, $document, $tf_type) * idf($term, $corpus, $log_idf);
 }
 
 /**
@@ -56,12 +56,13 @@ function tf($term, $document, $tf_type='raw') {
  *
  * @return int
  */
-function idf($term,$corpus) {
+function idf($term, $corpus, $log=true) {
   $num_contain = 0;
   foreach ($corpus as $document) {
     $num_contain += (int)contains_term($term,$document);
   }
-  return log(count($corpus) / max(array(1,$num_contain)));
+  $idf = count($corpus) / max(array(1,$num_contain));
+  return $log ? log($idf) : $idf;
 }
 
 /**
