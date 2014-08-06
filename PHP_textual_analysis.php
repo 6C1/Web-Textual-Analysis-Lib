@@ -92,3 +92,36 @@ function max_term_freq($document) {
 function contains_term($term,$document) {
   return strpos($document,$term) !== false;
 }
+
+/**
+ * Test for TF IDF function.
+ *
+ * @return string
+ */
+function tf_idf_test() {
+  $result = '';
+
+  $corpus = array(
+    'this is a sentence',
+    'this is another sentence',
+    'and this is yet one more',
+  );
+
+  $result .= '<h1>TF IDF Test</h1>';
+  $result .= '<h2>Corpus</h2>' . '<ul>';
+  foreach ($corpus as $document) {
+    $result .= '<li>' . $document . '</li>';
+  }
+  $result .= '</ul>';
+
+  $result .= '<h2>Tests</h2>';
+  foreach ($corpus as $document) {
+    $result .= '<h3>' . $document . '</h3>' . '<ul>';
+    foreach (explode(' ', $document) as $term) {
+      $result .= '<li>' . $term . " tf_idf: " . tf_idf($term,$document,$corpus) . '</li>';
+    }
+    $result .= '</ul>';
+  }
+
+  return (string)$result;
+}
