@@ -162,8 +162,8 @@ function tf_idf_test() {
   foreach($corpus as $document) {
     $result .= '<h2>' . $document . '</h2>' . '<ul>';
     $keywords = tf_idf_get_keywords($document,$corpus,5);
-    foreach ($keywords as $keyword->$tfidf) {
-      $result .= '<li>' . $keyword . ' ' . $tfidf . '</li>';
+    foreach ($keywords as $keyword) {
+      $result .= '<li>' . $keyword . '</li>';
     }
     $result .= '</ul>';
   }
