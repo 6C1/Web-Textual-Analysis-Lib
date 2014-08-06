@@ -183,6 +183,10 @@ function w_shingling($document, $n=4) {
   return $shingles;
 }
 
+/**
+ * @param $docA
+ * @param $docB
+ */
 function shingling_similarity($docA, $docB) {
   ;
 }
