@@ -61,7 +61,7 @@ function idf($term,$corpus) {
   foreach ($corpus as $document) {
     $num_contain += (int)contains_term($term,$document);
   }
-  return log(count($corpus) / $num_contain);
+  return log(count($corpus) / max(array(1,$num_contain));
 }
 
 /**
