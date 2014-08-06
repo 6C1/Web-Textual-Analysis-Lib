@@ -35,6 +35,8 @@ function tf_idf($term, $document, $corpus, $tf_type='raw', $log_idf=true) {
  * @param        $corpus
  * @param string $tf_type
  * @param bool   $log_idf
+ *
+ * @return array
  */
 function tf_idf_get_keywords($document, $corpus, $n, $tf_type='raw', $log_idf=true) {
   $terms = array();
@@ -43,7 +45,7 @@ function tf_idf_get_keywords($document, $corpus, $n, $tf_type='raw', $log_idf=tr
     $terms[$term] = tf_idf($term, $document, $corpus, $tf_type, $log_idf);
   }
   arsort($doc);
-  echo $doc;
+  return $doc;
 }
 
 /**
@@ -158,7 +160,12 @@ function tf_idf_test() {
   $result .= '<h1>TF IDF Keywords Test</h1>';
 
   foreach($corpus as $document) {
-    $result .= '<p>' . tf_idf_get_keywords($document,$corpus,5) . '</p>';
+    $result .= '<h2>' . $document . '</h2>' . '<ul>';
+    $keywords = tf_idf_get_keywords($document,$corpus,5);
+    foreach ($keywords as $keyword->$tfidf) {
+      $result .= '<li>' . $keyword . ' ' . $tfidf . '</li>';
+    }
+    $result .= '</ul>';
   }
 
   return (string)$result;
