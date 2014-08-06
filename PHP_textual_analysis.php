@@ -140,4 +140,17 @@ function tf_idf_test() {
  * SIMILARITY METRICS *
  *                    *
  *********************/
+
+function w_shingling($document, $n=4) {
+  $terms = strtok($document, ' ');
+  $len = strlen($document);
+  $shingles = array();
+  for ($i = 0; $i < $len - $n; $i++) {
+    $shingles[$i] = array();
+    for ($j = 0; $j < $n; $j++) {
+      $shingles[$i][$j] = $terms[$i+$j];
+    }
+  }
+  return $shingles;
+}
 }
