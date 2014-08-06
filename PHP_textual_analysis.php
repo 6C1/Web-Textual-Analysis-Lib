@@ -80,7 +80,8 @@ function idf($term, $corpus, $log=true) {
  * @return int
  */
 function term_freq_raw($term,$document) {
-  return (int)array_count_values($document)[$term];
+  $val = array_count_values(explode(' ', $document));
+  return $val[$term];
 }
 
 /**
@@ -99,7 +100,7 @@ function max_term_freq($document) {
  * @return bool
  */
 function contains_term($term,$document) {
-  return strpos($document,$term) !== false;
+  return strpos($document, $term) !== false;
 }
 
 /**
@@ -114,6 +115,7 @@ function tf_idf_test() {
     'this is a sentence',
     'this is another sentence',
     'and this is yet one more',
+    'and this is one where the words this and armadillo are repeated like this armadillo'
   );
 
   $result .= '<h1>TF IDF Test</h1>';
@@ -127,7 +129,10 @@ function tf_idf_test() {
   foreach ($corpus as $document) {
     $result .= '<h3>' . $document . '</h3>' . '<ul>';
     foreach (explode(' ', $document) as $term) {
-      $result .= '<li>' . $term . " tf_idf: " . tf_idf($term,$document,$corpus) . '</li>';
+      $result .= '<li>' . $term . "<br><strong>" . tf_idf($term,$document,$corpus) . "</strong>"; 
+      // $result .= "     tf: " . tf($term,$document); 
+      // $result .= "     idf: " . idf($term,$corpus);
+      $result .= '</li>';
     }
     $result .= '</ul>';
   }

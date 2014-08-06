@@ -5,6 +5,10 @@
 </head>
 <body>
 
+  <?php 
+    //phpinfo(); 
+  ?>
+
   <?php
     require_once('../PHP_textual_analysis.php');
     echo tf_idf_test();
