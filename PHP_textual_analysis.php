@@ -7,6 +7,12 @@
  */
 
 
+/********************
+ *                  *
+ * TF IDF FUNCTIONS *
+ *                  *
+ *******************/
+
 /**
  * Term Frequency Inverse Document Frequency
  *
@@ -14,6 +20,7 @@
  * @param        $document
  * @param        $corpus
  * @param string $tf_type
+ * @param bool   $log_idf
  *
  * @return float
  */
@@ -51,8 +58,9 @@ function tf($term, $document, $tf_type='raw') {
 /**
  * Inverse Document Frequency
  *
- * @param $term
- * @param $corpus
+ * @param      $term
+ * @param      $corpus
+ * @param bool $log
  *
  * @return int
  */
@@ -125,4 +133,11 @@ function tf_idf_test() {
   }
 
   return (string)$result;
+}
+
+/**********************
+ *                    *
+ * SIMILARITY METRICS *
+ *                    *
+ *********************/
 }
