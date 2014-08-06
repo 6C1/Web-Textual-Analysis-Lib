@@ -29,6 +29,24 @@ function tf_idf($term, $document, $corpus, $tf_type='raw', $log_idf=true) {
 }
 
 /**
+ * TF IDF N Keywords
+ *
+ * @param        $document
+ * @param        $corpus
+ * @param string $tf_type
+ * @param bool   $log_idf
+ */
+function tf_idf_get_keywords($document, $corpus, $n, $tf_type='raw', $log_idf=true) {
+  $terms = array();
+  $doc = explode(' ', $document);
+  foreach ($doc as $term) {
+    $terms[$term] = tf_idf($term, $document, $corpus, $tf_type, $log_idf);
+  }
+  arsort($doc);
+  echo $doc;
+}
+
+/**
  * Term Frequency (with options)
  *
  * @param        $term
@@ -135,6 +153,12 @@ function tf_idf_test() {
       $result .= '</li>';
     }
     $result .= '</ul>';
+  }
+
+  $result .= '<h1>TF IDF Keywords Test</h1>';
+
+  foreach($corpus as $document) {
+    $result .= '<p>' . tf_idf_get_keywords($document,$corpus,5) . '</p>';
   }
 
   return (string)$result;
