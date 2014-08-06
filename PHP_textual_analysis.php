@@ -153,4 +153,3 @@ function w_shingling($document, $n=4) {
   }
   return $shingles;
 }
-}
