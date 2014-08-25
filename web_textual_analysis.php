@@ -1,9 +1,9 @@
 <?php
 /**
  * @file
- * PHP_textual_analysis.php
+ * web_textual_analysis.php
  *
- * PHP-textual-analysis is a basic library of textual analysis functions.
+ * web-textual-analysis is a basic library of textual analysis functions.
  */
 
 
