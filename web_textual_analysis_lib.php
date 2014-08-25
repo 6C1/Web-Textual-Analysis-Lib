@@ -3,7 +3,7 @@
  * @file
  * web_textual_analysis.php
  *
- * web-textual-analysis is a basic library of textual analysis functions.
+ * Web Textual Analysis Lib is a basic library of textual analysis functions.
  */
 
 
