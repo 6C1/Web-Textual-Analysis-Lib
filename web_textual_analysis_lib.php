@@ -40,12 +40,12 @@ function tf_idf($term, $document, $corpus, $tf_type='raw', $log_idf=true) {
  */
 function tf_idf_get_keywords($document, $corpus, $n, $tf_type='raw', $log_idf=true) {
   $terms = array();
-  $doc = explode(' ', $document);
+  $doc = array_filter(explode(' ', $document));
   foreach ($doc as $term) {
     $terms[$term] = tf_idf($term, $document, $corpus, $tf_type, $log_idf);
   }
-  arsort($doc);
-  return $doc;
+  arsort($terms, SORT_NUMERIC);
+  return $terms;
 }
 
 /**
