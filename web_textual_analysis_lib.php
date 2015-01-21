@@ -131,44 +131,52 @@ function contains_term($term,$document) {
 function tf_idf_test() {
   $result = '';
 
-  $corpus = array(
-    'this is a sentence',
-    'this is another sentence',
-    'and this is yet one more',
-    'and this is one where the words this and armadillo are repeated like this armadillo'
-  );
-
-  $result .= '<h1>TF IDF Test</h1>';
-  $result .= '<h2>Corpus</h2>' . '<ul>';
-  foreach ($corpus as $document) {
-    $result .= '<li>' . $document . '</li>';
-  }
-  $result .= '</ul>';
-
-  $result .= '<h2>Tests</h2>';
-  foreach ($corpus as $document) {
-    $result .= '<h3>' . $document . '</h3>' . '<ul>';
-    foreach (explode(' ', $document) as $term) {
-      $result .= '<li>' . $term . "<br><strong>" . tf_idf($term,$document,$corpus) . "</strong>"; 
-      // $result .= "     tf: " . tf($term,$document); 
-      // $result .= "     idf: " . idf($term,$corpus);
-      $result .= '</li>';
-    }
-    $result .= '</ul>';
+  // Use Moby Dick as our test corpus.
+  $chapters = get_moby_dick_chapters();
+  $chapter_strings = array();
+  foreach ($chapters as $chapter) {
+    $chapter_strings[] = implode(' ',$chapter);
   }
 
-  $result .= '<h1>TF IDF Keywords Test</h1>';
+  // Make an array of $chapter, $keywords pairs.
+  $data = array();
+  foreach ($chapter_strings as $chapter) {
+    $data[] = array(
+      'text' => $chapter,
+      'keywords' => tf_idf_get_keywords($chapter,$chapter_strings,5),
+    );
+  }
 
-  foreach($corpus as $document) {
-    $result .= '<h2>' . $document . '</h2>' . '<ul>';
-    $keywords = tf_idf_get_keywords($document,$corpus,5);
-    foreach ($keywords as $keyword) {
-      $result .= '<li>' . $keyword . '</li>';
+  foreach ($data as $d) {
+    $keyword = '';
+    foreach ($d['keywords'] as $k => $score) {
+      $keyword = $k;
+      break;
     }
-    $result .= '</ul>';
+    $result .= '<h1>' . implode(' ', array_slice(explode(' ', $d['text']), 0, 10)) . '</h1>';
+    $result .= '<p>' . $keyword . '</p>';
   }
 
   return (string)$result;
+}
+
+/**
+ * Helper function to pull chapters of Moby-Dick: Or, The White Whale from
+ * Project Gutenberg for testing purposes.
+ */
+function get_moby_dick_chapters() {
+  $text = explode("\n",file_get_contents('http://www.gutenberg.org/cache/epub/2701/pg2701.txt'));
+  $chapters = array();
+  foreach ($text as $line) {
+    // Are we beginning a new chapter?
+    if (strpos($line,'CHAPTER')===0) {
+      $chapters[] = array();
+    } elseif (count($chapters)) {
+      // Otherwise, add this line to the current chapter.
+      $chapters[count($chapters)-1][] = trim($line);
+    }
+  }
+  return $chapters;
 }
 
 /**********************
